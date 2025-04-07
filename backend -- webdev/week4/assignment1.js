@@ -20,6 +20,12 @@ app.get("/", (req, res)=>{
 });
 */
 
+/*
+app.listen(port,()=>{
+    console.log(`app running on port ${port}`);
+})
+*/
+
 app.listen(port, function(){
     console.log(`app running on port ${port}`);
 });
