@@ -3,7 +3,6 @@
 
 // using import ---
 import express from "express";
-import { kill } from "process";
 
 const app = express();
 app.use(express.json());
