@@ -1,0 +1,26 @@
+FOR BACKEND --
+npm init
+
+npm i express -
+const app = express();
+app.use(express.json());
+const port = 3000;
+app.listen(port, ()=>{
+    console.log(`app running on the ${port}`);
+})
+
+npm i nodemon
+
+in package.json
+"type":"module",
+
+to run - nodemon filename.js
+
+npm i cors
+import cors from "cors";
+app.use(cors());
+
+FOR FRONTEND ---
+we can fetch it using fetch or axios
+npm i axios 
+// then add axios before body
