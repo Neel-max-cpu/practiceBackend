@@ -1,6 +1,12 @@
 FOR BACKEND --
 npm init
 
+// to make the touch command work --
+npm install touch-cli -g
+// or -
+npm i touch-cli -g
+then we can use --- touch index.js
+
 npm i express -
 const app = express();
 app.use(express.json());
@@ -9,6 +15,7 @@ app.listen(port, ()=>{
     console.log(`app running on the ${port}`);
 })
 
+// NODEMON ---
 npm i nodemon
 
 in package.json
@@ -20,7 +27,18 @@ npm i cors
 import cors from "cors";
 app.use(cors());
 
+
+// JSON WEBTOKEK ---
+npm i jsonwebtoken
+
+
+// ZOD ---
+npm i zod
+
+
 FOR FRONTEND ---
 we can fetch it using fetch or axios
 npm i axios 
 // then add axios before body
+<!-- ✅ Add Axios CDN -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

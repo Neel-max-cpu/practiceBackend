@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- ✅ Add Axios CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>`
+</head>
+<body>
+    <div>
+        Signup  
+        <input id="signup_email" type="email" placeholder="your_email@email.com">
+        <input id="signup_name" type="text" placeholder="name here">
+        <input id="signup_pass" type="password" placeholder="password">
+        <input id="signup_cpass" type="password" placeholder="confirm password">
+        <button onclick="signup()">Signup</button>
+        <h2 id="signup_success"></h2>
+    </div>
+    <div>
+        SignIn
+        <input id="signin_email" type="email" placeholder="your_email@email.com">
+        <input id="signin_pass" type="password" placeholder="password">
+        <button onclick="login()">Login</button>
+        <h2 id="signin_success"></h2>
+    </div>
+
+    <div>
+        User Info:
+        <button onclick="checkinfo()">Click to see!</button>
+        <div id="information"></div>
+    </div>
+
+    <div>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // using axios -- taking from index.js
+        async function signup() {
+            const email = document.getElementById("signup_email").value;
+            const name = document.getElementById("signup_name").value;
+            const pass = document.getElementById("signup_pass").value;
+            const cpass = document.getElementById("signup_cpass").value;
+            try {
+                const res = await axios.post("http://localhost:3000/signup",{email, name, pass, cpass});
+                document.getElementById("signup_success").innerText = "Signup Success!"
+            } catch (error) {
+                console.log("Error", error);
+                document.getElementById("signup_success").innerText = "error"
+            }
+        }
+
+        async function login() {
+            const email = document.getElementById("signin_email").value;
+            const pass = document.getElementById("signin_pass").value;
+            try {
+                const res = await axios.post("http://localhost:3000/signin", {email, pass});
+                localStorage.setItem("token", res.data.token);
+                document.getElementById("signin_success").innerText="Signin Sucess!"
+            } catch (error) {
+                console.log("Error", error);
+                document.getElementById("signin_success").innerText = "error"
+            }
+        }
+
+        async function checkinfo() {
+            const token = localStorage.getItem("token");
+            if(!token){
+                document.getElementById("information").innerText="Your are not logged in!";
+            }
+            try {
+                const res = await axios.get("http://localhost:3000/me", {
+                    headers:{
+                        Authorization: token
+                    }
+                });
+                document.getElementById("information").innerHTML=`Email:${res.data.email}, Name:${res.data.name}`;
+            } catch (error) {
+                console.log("Error", error);
+                document.getElementById("information").innerHTML = "error"
+            }
+        }
+
+        function logout(){
+            localStorage.removeItem("token");
+            document.getElementById("signup_success").innerText = "";
+            document.getElementById("signin_success").innerText = "";
+            document.getElementById("information").innerHTML = "Logged out!";
+        }
+
+    </script>
+
+</body>
+</html>
