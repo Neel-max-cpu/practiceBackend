@@ -53,7 +53,8 @@ const signinSchema = z.object({
 app.post("/signin", (req, res)=>{
     const parsed = signinSchema.safeParse(req.body);
     if(!parsed.success){
-        return res.status(400).send("password doesn't match the confirm pasword");
+        // return res.status(400).send("password doesn't match");
+        return res.status(400).json({error:parsed.error.errors});
     }
     const {email, pass} = parsed.data;
     const user = users.find(user=>user.email === email);
