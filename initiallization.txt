@@ -1,5 +1,6 @@
 FOR BACKEND --
-npm init
+npm init -y
+npm i express mongoose nodemon zod jsonwebtoken
 
 // to make the touch command work --
 npm install touch-cli -g
@@ -34,6 +35,11 @@ npm i jsonwebtoken
 
 // ZOD ---
 npm i zod
+
+
+// MONOGDB STARTING FROM WEEK7 - notes7.1
+always use async!!!!!
+
 
 
 FOR FRONTEND ---
