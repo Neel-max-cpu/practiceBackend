@@ -5,13 +5,19 @@ const ObjectId = Schema.Types.ObjectId;
 const User = new Schema({
     name:String,
     email:{type:String, unique:true},
-    pass :String
+    // pass :String
+    hashedpass:String
 });
 
 const Todo = new Schema({
-    userId:ObjectId,
-    title:String,
-    done:{type: Boolean, default:false},
+        // userId:ObjectId,
+        userId:{ type: mongoose.Schema.Types.ObjectId, ref: 'users' },      // using relationships --
+        title:String,
+        done:{type: Boolean, default:false},
+        dueBy: Date         //optional --
+    },
+    {
+    timestamp:true
 })
 
 export const UserModel = mongoose.model('users', User);

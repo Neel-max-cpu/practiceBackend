@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import { TodoModel, UserModel } from "./models/db.js";
 import mongoose from 'mongoose'
 import { authentication } from "./middleware/auth.middleware.js";
+import bcrypt, { hash } from 'bcrypt'
 
 const app = express();
 const port = 3000;
@@ -32,19 +33,23 @@ const signupSchema = z.object({
 app.post("/signup", async(req, res)=>{
     const paresed = signupSchema.safeParse(req.body);
     if(!paresed.success){
-        return res.status(400).send("Error in singup");
+        // return res.status(400).send("Error in singup");
+        return res.status(400).json({error:paresed.error.errors});
     }
-    const {email, name, pass, cpass} = paresed.data;
+    const {email, name, cpass, pass} = paresed.data;
     if(pass !== cpass){
-        return res.status(400).send("password and confirm password is same!");
+        return res.status(400).send("password and confirm password are not same!");
     }
 
     const existingUser = await UserModel.findOne({email});
     if(existingUser){
         return res.status(400).send("User already exists");
     }
+    // hashing the pass ---
+    const hashedpass = await bcrypt.hash(pass, 10);
 
-    const newUser = new UserModel({name, email, pass});
+    // const newUser = new UserModel({name, email, pass});
+    const newUser = new UserModel({name, email, hashedpass});
     await newUser.save();
 
     const token = jwt.sign({email}, JWT_SECRET);
@@ -71,8 +76,11 @@ app.post("/login", async(req, res)=>{
     console.log(`user1 it is ${user1}`);
     */
     const user = await UserModel.findOne({email});
-    console.log(`user it is ${user}`);
-    if(!user || user.pass!==pass){
+    // console.log(`user it is ${user}`);
+    // if(!user || user.pass!==pass){
+    // const isMatch = await bcrypt.compare(pass, user.pass);
+    const isMatch = await bcrypt.compare(pass, user.hashedpass);
+    if(!user || !isMatch){
         /*
         if(!user){
             console.log("Wrong user");
@@ -131,8 +139,12 @@ app.get("/todo", authentication, async(req, res)=>{
         if(!user){
             return res.status(400).send("user doesn't exist!");
         }
-
-        const todos = await TodoModel.find({userId:user._id});
+        
+        // by not using relationships
+        // const todos = await TodoModel.find({userId:user._id});
+        
+        // using relationships --- passing the id
+        const todos = await TodoModel.find({userId:user._id}).populate('userId');
         if(todos.length===0){
             return res.status(200).send("no todos found! write Something up!");
         }
@@ -140,4 +152,10 @@ app.get("/todo", authentication, async(req, res)=>{
     } catch (error) {
         return res.status(500).send("something went wrong!");
     }
+})
+
+
+app.put("/todo/:id/markdone", async(req, res)=>{
+    await TodoModel.findByIdAndUpdate(req.params.id, {done:true});
+    res.send("marked done!");
 })

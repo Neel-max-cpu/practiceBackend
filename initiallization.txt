@@ -1,6 +1,6 @@
 FOR BACKEND --
 npm init -y
-npm i express mongoose nodemon zod jsonwebtoken
+npm i express mongoose nodemon zod jsonwebtoken bcrypt
 
 // to make the touch command work --
 npm install touch-cli -g
