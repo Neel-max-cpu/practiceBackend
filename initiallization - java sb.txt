@@ -1,0 +1,17 @@
+go to spring initiallizer -
+https://start.spring.io/
+
+make the file and done
+
+some of the file structures -- 
+1) controllers(write @RestController at the top) - where we write the api call - post/get/put/delete etc - get /login, /signup etc
+
+2) models - where we write the model that goes into the db(basically what are saving) - 
+eg if Signup model then - what we want to save in the backend - eg name, email, password
+
+3) dto(data transfer object) - the schema that we want to call before saving. Like in js we can use zod to make 
+the schema, and then work on that. similarly, eg in signup we would like to have name, email, password, confirm password,
+and n number of different fields to verify but we don't want to save all the things in the dataBase(like confirm pass)
+so we call dto and then save what we want in the model.
+
+4) services(write @Service at the top) - where the actual work takes place. the controller calls the service to work
