@@ -1,16 +1,15 @@
 package com.week5.allOfWeek5.Controller;
 
 import com.week5.allOfWeek5.Filter.LogginFilter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.week5.allOfWeek5.Model.BodyCal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/")
 public class Calculator {
 
     // Week 5 - 5.1 ASSIGNMENT 1
+    /*
     @GetMapping("/sum/{a}/{b}")
     public String sum(@PathVariable int a, @PathVariable int b){
         int result = a+b;
@@ -38,10 +37,40 @@ public class Calculator {
         return "the div is :"+res1+" "+res2;
     }
 
-    // ASSIGNMENT 3
+    */
+    // ASSIGNMENT 3-week5.1/5.2
     @GetMapping("/getCount")
     public String getCount(){
         int count = LogginFilter.requestCount.get();
         return "Total request that hit the server till now: "+count;
+    }
+
+    @PostMapping("/sum")
+    public String sum(@RequestBody BodyCal bodyCal){
+        int res = bodyCal.getA() + bodyCal.getB();
+        return "the sum is : "+res;
+    }
+
+    @PostMapping("/sub")
+    public String sub(@RequestBody BodyCal body){
+        int res1 = body.getA() - body.getB();
+        int res2 = body.getB() - body.getA();
+        return "the sub is : "+res1+" "+res2;
+    }
+
+    @PostMapping("/mul")
+    public String mul(@RequestBody BodyCal body){
+        int res = body.getA() * body.getB();
+        return "the mul is: "+res;
+    }
+
+    @PostMapping("/div")
+    public String div(@RequestBody BodyCal body){
+        int res1 =0, res2=0;
+        int a = body.getA();
+        int b= body.getB();
+        if(b!=0) res1 = a/b;
+        if(a!=0) res2 = b/a;
+        return "the div is: "+res1+" "+res2;
     }
 }

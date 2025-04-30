@@ -8,15 +8,15 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
-// week 5.1 - ASSIGNMENT 2
+// week 5.1 - ASSIGNMENT 2 and 5.2 ASSIGNMENT 2
 
 @Component
 public class LogginFilter implements Filter {
 
-    // ASSIGNMENT 3 - COUNTER
+    // ASSIGNMENT 3(FOR BOTH week5.1/5.2 - COUNTER
     // instead of int counter = 0, cause
     /*
-        When multiple users hit the server at the same time (concurrent requests),
+        When multiple users hit the server at the same tim ae (concurrent requests),
         normal int is NOT thread-safe — meaning:
 
         Two requests can read count = 10 at the same time
