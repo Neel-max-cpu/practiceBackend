@@ -15,3 +15,5 @@ and n number of different fields to verify but we don't want to save all the thi
 so we call dto and then save what we want in the model.
 
 4) services(write @Service at the top) - where the actual work takes place. the controller calls the service to work
+
+5) filter(write @Component at the top) - mostly used for logs and filtering data when passed from the request
