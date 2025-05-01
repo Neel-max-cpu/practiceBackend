@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styleSheet.css">
+</head>
+<body>
+    <div class="signup">
+        <span>SignUp:</span>
+        <input type="text" id="signup-name" placeholder="name">
+        <input type="email" id="signup-email" placeholder="email">
+        <input type="password" id="signup-pass" placeholder="password">
+        <input type="password" id="signup-cpass" placeholder="confirm password">
+        <button type="button" id="signup-btn">SignUp</button>
+    </div>
+
+    <div class="login">
+        <span>Login:</span>
+        <input type="email" placeholder="email" id="login-email">
+        <input type="password" placeholder="password" id="login-pass">
+        <button type="button" id="login-btn">Login</button>
+    </div>
+    <div>
+        <button type="button" id="logout-btn">Logout</button>
+    </div>    
+    <div>
+        <span>User Info:</span>
+        <button type="button" id="getinfo-btn">Get Info</button>
+        <div id="user-info-display"></div>
+    </div>
+
+    <!-- axios to fetch -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+
+    <!-- js -->
+    <script>
+        async function signUp() {            
+            const name = document.getElementById("signup-name").value;
+            const email = document.getElementById("signup-email").value;
+            const pass = document.getElementById("signup-pass").value;
+            const cpass = document.getElementById("signup-cpass").value;
+            
+            try {
+                const response = await axios.post("http://localhost:8080/api/auth/signup",{
+                    name,
+                    email,
+                    pass,
+                    cpass
+                });
+                if(response.data === "Signed Up successfully!"){
+                    alert("signup successfully!");                
+                }
+                else if(response.data === "Password and confirm password must be equal!"){
+                    alert("pass and cpass not equal");
+                }                                
+                else{
+                    alert("User with this email already exists!");
+                }
+            } catch (error) {
+                if(error.response){
+                    alert("Error: "+error.response.data.message || "login failed!");
+                }
+                else if(error.request){
+                    alert("Error: No response from the server!");
+                }
+                else{
+                    alert("Error: "+error.message);
+                }
+            }
+
+        }
+
+        async function login() {
+            const email = document.getElementById("login-email").value;
+            const pass = document.getElementById("login-pass").value;
+            try {
+                const response = await axios.post("http://localhost:8080/api/auth/login", {
+                    email, 
+                    pass
+                });
+                if(response.data.token){
+                    localStorage.setItem("token", response.data.token);
+                    alert("logged in successfully!");
+                }
+                else{
+                    alert("Error: no token!")
+                }
+                
+            } catch (error) {
+                if(error.response){
+                    alert("Error: "+error.response.data.message || "login failed!");
+                }
+                else if(error.request){
+                    alert("Error: No response from the server!");
+                }
+                else{
+                    alert("Error: "+error.message);
+                }
+            }
+            
+        }
+
+        async function userInfo() {
+            const token = localStorage.getItem("token");
+            if(!token){
+                alert("No token found!");
+                return;
+            }
+            try {
+                const response = await axios.get("http://localhost:8080/api/auth/userinfo",{
+                    headers:{
+                        "Authorization":token
+                    }
+                });
+                const userInfoDiv = document.getElementById("user-info-display");
+                userInfoDiv.innerHTML="";
+                const userdata = response.data;
+                console.log(userdata);
+                const ul = document.createElement("ul");
+                for(const key in userdata){
+                    const li = document.createElement("li");
+                    li.textContent = `${key}: ${userdata[key]}`;
+                    ul.appendChild(li);
+                }
+                userInfoDiv.appendChild(ul);
+                
+            } catch (error) {
+                if(error.response){
+                    alert("Error: "+(error.response.data.message || "failed to fetch data!"));                    
+                }
+                else if(error.request){
+                    alert("Error: No response from server");
+                }
+                else{
+                    alert("Error "+error.message );
+                }
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            alert("logged out successfully!");
+        }
+
+        document.getElementById("signup-btn").addEventListener("click", signUp);
+        document.getElementById("login-btn").addEventListener("click", login);
+        document.getElementById("logout-btn").addEventListener("click", logout);
+        document.getElementById("getinfo-btn").addEventListener("click",userInfo);
+    </script>
+
+</body>
+</html>

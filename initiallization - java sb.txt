@@ -1,10 +1,15 @@
 go to spring initiallizer -
 https://start.spring.io/
 
+to get dependencies --
+maven central --
+https://central.sonatype.com/
+
 make the file and done
 
 some of the file structures -- 
 1) controllers(write @RestController at the top) - where we write the api call - post/get/put/delete etc - get /login, /signup etc
+@Autowired the service(not the service implementation)
 
 2) models - where we write the model that goes into the db(basically what are saving) - 
 eg if Signup model then - what we want to save in the backend - eg name, email, password
@@ -17,3 +22,20 @@ so we call dto and then save what we want in the model.
 4) services(write @Service at the top) - where the actual work takes place. the controller calls the service to work
 
 5) filter(write @Component at the top) - mostly used for logs and filtering data when passed from the request
+
+6) repository(directly talks to the db - use interface and extends to JpaRepository - spring-boot-starter-data-jpa)
+
+7) configuration(generally allowed path - eg cors, write @Configuration also after class @Bean) -- see week6.2 for example just add the global file
+
+IMPORTANT STUFF --
+1) class(Provides the actual logic for those methods.) vs interface(Only defines what should be done (method signatures).)
+generally inside the service we create 2 files one is service(eg serviceOne) and second is implementation(eg serviceOneImp)
+first one interface and 2nd one is class and put @Service on top. And in the controller put @Autowired then call the serviceOne
+
+2) similar to zod there is bean validation to check validation (spring-boot-starter-validation) of the input - put in your dto folder 
+
+3) for jwt(json web token) there are 3 dependencies -- jjwt-api, jjwt-impl, and jjwt-jackson, also use this (<scope>runtime</scope>) 
+in jjwt-impl and jjwt-jackson paste below to make it work in the runtime (see maven central and don't remove the version or will throw error)
+
+4) here jwt take 32byte secret key or it will throw error - so how to generate -
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))
