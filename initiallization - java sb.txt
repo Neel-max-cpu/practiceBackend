@@ -1,3 +1,116 @@
+//PREVIOUS ---
+/*
+https://youtu.be/kt3wUPIDkx4?si=p0ZLOYnaX88IAtgr
+extensions --
+
+
+install --
+https://youtu.be/R6MoDMASwag?si=wxeuzb5bHU-kcGMd
+
+program --
+https://youtu.be/5LlfwQ4xzXc?si=HL8uoiv6ncSPRogd
+
+
+// maven --
+https://youtu.be/YTvlb6eny_0?si=lxUZ4DXhR0woQLVn
+
+
+// java spring boot see from there tutorial -- and use intellij to save brain cells
+https://youtu.be/gJrjgg1KVL4?si=RwQmMbw7fyzmEPAG
+
+
+// go to spring initiallizer - start.spring.io to create the spring app
+1) give dependency - spring web(for restfull apis)
+
+
+// FOLDER STRUCTURE ---
+-- Controllers, Services, Entity(where db models are created)
+
+// dependencies -- 
+1) maven central 
+spring-boot-starter-web(then copy paste)[do this] -- and best practice remove the version tag
+2) or pom.xml -> go to dependencies tag then right click->generater->dependency
+
+//some notes --
+spring mvc (mvc - model, view, controller)
+model - data+logic
+view - what the user sees(html css js is rendered)
+controller - mediator
+
+// opening a java spring boot file --
+1) in the right hand side bar there is mavan - click on it
+2) go to mavan store
+3) go to lifecycle file
+4) right click on clean and run mavan build
+5) right click on packagae and run mavan build
+6) right click on install and run mavan build
+
+
+// run java spring boot -- go the root foler - then -- if runing from terminal
+mvn spring-boot:run
+
+// if want to run from the run button(recomanded)
+1) open the project
+2) go to the main file(generally under src/main/java/com.neel.store(main folder that gets created)
+3) the file under it (in the above case) StoreApplication.java[then there will be run option]
+
+//IF WANT TO RUN FROM ANY FILE ---
+1) go the the side drop down (left side of run)
+2) edit configuration
+3) create a new and name it(here named as store)
+4) build and run - java 24(latest) and side select the StoreApplication.java(inside - src/main/java/com.neel.store)
+5) apply then ok done!
+
+
+//if port is already is in use --- then in cmd
+netstat -ano | findstr :8080
+// 12345 - replace it wiht listening address(get it from above code)
+taskkill /PID 12345 /F
+
+
+// HOW TO REFACTOR A CODE--
+1)select a code
+2)go to up bar then Refactor
+3) then Extract/introduce then interface
+4) name it below there is select it then refactor - done!
+
+
+// some shortcuts ---
+shift+shift (o go anywhere in the file search everywhere)
+ctrl+. (to bring up context menu in videos alt+enter)
+ctrl+, (to bring up settings)
+alt+insert (to bring up generate context menu)
+
+
+// some imp dependecy -
+1) spring web when making the project
+2) spring-boot-starter-validation(like zod in node - form validation)
+3) jakarta.persistence-api
+4) spring-boot-starter-data-jpa
+
+5) jjwt-api(5,6,7 for jsonwebtoken - don't remove the version from any of their dependency or won't work)
+6) jjwt-impl
+7) jjwt-jackson 
+
+8) spring-boot-starter-security(for security)
+
+9) mysql-connector-j(for mysql)
+
+10)spring-boot-starter-web (used in rest controller -- get/post/put etc)
+
+(*) so must needed dependency - are:
+spring-boot-starter-web(for restapis) -- add when creating folder in spring starter
+spring-boot-starter-data-jpa(for interacting with the database - generally sql based)
+spring-boot-starter-validation(for form validation like zod)
+jjwt-api,jjwt-impl,jjwt-jackson(for json webtoken - don't remove the versions)
+spring-boot-starter-security(for security, authentication eg dashboard page where one needs to get authnticated)
+mysql-connector-j(for connection with mysql)
+
+
+*/
+
+
+// NEW START HERE ------
 go to spring initiallizer -
 https://start.spring.io/
 
