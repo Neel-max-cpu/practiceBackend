@@ -85,7 +85,7 @@ alt+insert (to bring up generate context menu)
 // some imp dependecy -
 1) spring web when making the project
 2) spring-boot-starter-validation(like zod in node - form validation)
-3) jakarta.persistence-api
+3) jakarta.persistence-api(for making id unique etc)
 4) spring-boot-starter-data-jpa
 
 5) jjwt-api(5,6,7 for jsonwebtoken - don't remove the version from any of their dependency or won't work)
@@ -132,7 +132,7 @@ the schema, and then work on that. similarly, eg in signup we would like to have
 and n number of different fields to verify but we don't want to save all the things in the dataBase(like confirm pass)
 so we call dto and then save what we want in the model.
 
-4) services(write @Service at the top) - where the actual work takes place. the controller calls the service to work
+4) services(write @Service at the top and check whic one will be public interface[instead of class]) - where the actual work takes place. the controller calls the service to work
 
 5) filter(write @Component at the top) - mostly used for logs and filtering data when passed from the request
 
