@@ -32,7 +32,6 @@ public class AuthController {
     public ResponseEntity<?>signup(@RequestBody SignUpDto signUpDto){
         String res = authService.signup(signUpDto);
         return ResponseEntity.ok(res);
-
     }
 
 }

@@ -150,5 +150,12 @@ first one interface and 2nd one is class and put @Service on top. And in the con
 3) for jwt(json web token) there are 3 dependencies -- jjwt-api, jjwt-impl, and jjwt-jackson, also use this (<scope>runtime</scope>) 
 in jjwt-impl and jjwt-jackson paste below to make it work in the runtime (see maven central and don't remove the version or will throw error)
 
-4) here jwt take 32byte secret key or it will throw error - so how to generate -
-node -e "console.log(require('crypto').randomBytes(32).toString('hex'))
+4) here jwt take 32byte secret key or it will throw error - so how to generate - works in node
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+for java spring boot - 
+$bytes = New-Object byte[] 32; (New-Object System.Security.Cryptography.RNGCryptoServiceProvider).GetBytes($bytes); [BitConverter]::ToString($bytes) -replace '-',''
+
+
+5) Important - Global exception instead of 1 line exception
+
+6) logger/logback (svf4j) done in controller/service
